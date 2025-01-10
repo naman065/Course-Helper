@@ -89,31 +89,21 @@ __turbopack_esm__({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react.js [app-ssr] (ecmascript)");
-(()=>{
-    const e = new Error("Cannot find module '../api'");
-    e.code = 'MODULE_NOT_FOUND';
-    throw e;
-})();
 ;
 ;
-;
-function Modal({ isOpen, onClose, onSubmit, course, refreshCourses }) {
-    const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(course || {
+function Modal({ isOpen, onClose, onSubmit, course }) {
+    const [formData, setFormData] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         title: "",
         code: "",
         credits: "",
         description: "",
         image: ""
     });
-    // Reset the form when the modal opens
+    // Populate form data when a course is selected
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        setFormData(course || {
-            title: "",
-            code: "",
-            credits: "",
-            description: "",
-            image: ""
-        });
+        if (course) {
+            setFormData(course);
+        }
     }, [
         course
     ]);
@@ -124,33 +114,17 @@ function Modal({ isOpen, onClose, onSubmit, course, refreshCourses }) {
                 [name]: value
             }));
     };
-    const handleSubmit = async (e)=>{
+    const handleSubmit = (e)=>{
         e.preventDefault();
-        try {
-            if (course) {
-                // Update course
-                await updateCourse(course.id, formData);
-            } else {
-                // Add new course
-                await addCourse(formData);
-            }
-            refreshCourses(); // Refresh the course list after the operation
-            onClose(); // Close the modal
-        } catch (error) {
-            console.error("Error submitting the course:", error);
-            alert("Failed to submit the course. Please try again.");
-        }
-    };
-    const handleDelete = async ()=>{
-        if (!course) return; // Only delete if a course is selected
-        try {
-            await deleteCourse(course.id);
-            refreshCourses(); // Refresh the course list after deletion
-            onClose(); // Close the modal
-        } catch (error) {
-            console.error("Error deleting the course:", error);
-            alert("Failed to delete the course. Please try again.");
-        }
+        onSubmit(formData);
+        setFormData({
+            title: "",
+            code: "",
+            credits: "",
+            description: "",
+            image: ""
+        });
+        onClose();
     };
     if (!isOpen) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -160,10 +134,10 @@ function Modal({ isOpen, onClose, onSubmit, course, refreshCourses }) {
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                     className: "text-xl font-bold mb-4",
-                    children: course ? `Edit Course: ${course.title}` : "Add New Course"
+                    children: course ? "Course Details" : "Add New Course"
                 }, void 0, false, {
                     fileName: "[project]/components/Modal.js",
-                    lineNumber: 55,
+                    lineNumber: 42,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -176,10 +150,11 @@ function Modal({ isOpen, onClose, onSubmit, course, refreshCourses }) {
                             value: formData.title,
                             onChange: handleChange,
                             className: "w-full p-2 mb-2 border rounded",
+                            disabled: !!course,
                             required: true
                         }, void 0, false, {
                             fileName: "[project]/components/Modal.js",
-                            lineNumber: 59,
+                            lineNumber: 46,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -189,10 +164,11 @@ function Modal({ isOpen, onClose, onSubmit, course, refreshCourses }) {
                             value: formData.code,
                             onChange: handleChange,
                             className: "w-full p-2 mb-2 border rounded",
+                            disabled: !!course,
                             required: true
                         }, void 0, false, {
                             fileName: "[project]/components/Modal.js",
-                            lineNumber: 68,
+                            lineNumber: 56,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -202,10 +178,11 @@ function Modal({ isOpen, onClose, onSubmit, course, refreshCourses }) {
                             value: formData.credits,
                             onChange: handleChange,
                             className: "w-full p-2 mb-2 border rounded",
+                            disabled: !!course,
                             required: true
                         }, void 0, false, {
                             fileName: "[project]/components/Modal.js",
-                            lineNumber: 77,
+                            lineNumber: 66,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -214,10 +191,11 @@ function Modal({ isOpen, onClose, onSubmit, course, refreshCourses }) {
                             value: formData.description,
                             onChange: handleChange,
                             className: "w-full p-2 mb-2 border rounded",
+                            disabled: !!course,
                             required: true
                         }, void 0, false, {
                             fileName: "[project]/components/Modal.js",
-                            lineNumber: 86,
+                            lineNumber: 76,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -227,65 +205,69 @@ function Modal({ isOpen, onClose, onSubmit, course, refreshCourses }) {
                             value: formData.image,
                             onChange: handleChange,
                             className: "w-full p-2 mb-4 border rounded",
+                            disabled: !!course,
                             required: true
                         }, void 0, false, {
                             fileName: "[project]/components/Modal.js",
-                            lineNumber: 94,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "flex justify-end gap-2",
-                            children: [
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    type: "button",
-                                    onClick: onClose,
-                                    className: "px-4 py-2 bg-gray-200 text-gray-700 rounded",
-                                    children: "Cancel"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/Modal.js",
-                                    lineNumber: 104,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    type: "submit",
-                                    className: "px-4 py-2 bg-blue-500 text-white rounded",
-                                    children: course ? "Update" : "Submit"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/Modal.js",
-                                    lineNumber: 111,
-                                    columnNumber: 13
-                                }, this),
-                                course && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                    type: "button",
-                                    onClick: handleDelete,
-                                    className: "px-4 py-2 bg-red-500 text-white rounded-md shadow hover:bg-red-600",
-                                    children: "Delete"
-                                }, void 0, false, {
-                                    fileName: "[project]/components/Modal.js",
-                                    lineNumber: 118,
-                                    columnNumber: 15
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "[project]/components/Modal.js",
-                            lineNumber: 103,
+                            lineNumber: 85,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/Modal.js",
-                    lineNumber: 58,
+                    lineNumber: 45,
+                    columnNumber: 9
+                }, this),
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "flex justify-end gap-2 mt-4",
+                    children: [
+                        course && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    type: "button",
+                                    className: "px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600",
+                                    children: "Update"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/Modal.js",
+                                    lineNumber: 99,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                    type: "button",
+                                    className: "px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600",
+                                    children: "Delete"
+                                }, void 0, false, {
+                                    fileName: "[project]/components/Modal.js",
+                                    lineNumber: 105,
+                                    columnNumber: 15
+                                }, this)
+                            ]
+                        }, void 0, true),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            type: "button",
+                            onClick: onClose,
+                            className: "px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300",
+                            children: "Close"
+                        }, void 0, false, {
+                            fileName: "[project]/components/Modal.js",
+                            lineNumber: 113,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/components/Modal.js",
+                    lineNumber: 96,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/Modal.js",
-            lineNumber: 54,
+            lineNumber: 41,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/Modal.js",
-        lineNumber: 53,
+        lineNumber: 40,
         columnNumber: 5
     }, this);
 }
@@ -443,7 +425,36 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$api$2f$api$2e$js__$5b$app$2d
 function Home() {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     // State for courses
-    const [courses, setCourses] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([]);
+    const [courses, setCourses] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])([
+        {
+            name: 'Machine Learning',
+            code: 'CS771',
+            credit: 9,
+            description: 'An advanced course on machine learning algorithms.',
+            image: '/ml.png'
+        },
+        {
+            name: 'Data Structures and Algorithms',
+            code: 'ESO207',
+            credit: 11,
+            description: 'Learn about arrays, linked lists, trees, and more.',
+            image: '/dsa.png'
+        },
+        {
+            name: 'Fluid Mechanics',
+            code: 'ME302',
+            credit: 9,
+            description: 'Fundamentals of fluid mechanics and applications.',
+            image: '/fluid.png'
+        },
+        {
+            name: 'Introduction to Electronics',
+            code: 'ESO201',
+            credit: 11,
+            description: 'Basics of electrical circuits and applications.',
+            image: '/electronics.png'
+        }
+    ]);
     const [isModalOpen, setIsModalOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [selectedCourse, setSelectedCourse] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
     // Authentication state
@@ -491,12 +502,11 @@ function Home() {
     };
     const handleAddCourse = async (newCourse)=>{
         try {
-            const response = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$api$2f$api$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["addCourse"])(newCourse); // Call API
-            setCourses((prev)=>[
-                    ...prev,
-                    response.data
-                ]); // Update state
-            setIsModalOpen(false); // Close modal
+            const response = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$api$2f$api$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["addCourse"])(newCourse); // API call to add course
+            if (response && response.data) {
+                await fetchCourses(); // Refresh course list
+                setIsModalOpen(false); // Close modal
+            }
         } catch (error) {
             console.error("Error adding course:", error);
         }
@@ -506,7 +516,8 @@ function Home() {
         try {
             const response = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$api$2f$api$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["updateCourse"])(updatedCourse.id, updatedCourse); // Call API
             setCourses((prevCourses)=>prevCourses.map((course)=>course.id === updatedCourse.id ? response.data : course));
-            setIsModalOpen(false); // Close modal
+            setIsModalOpen(false);
+            refreshCourses(); // Close modal
         } catch (error) {
             console.error("Error updating course:", error);
         }
@@ -531,7 +542,7 @@ function Home() {
                         children: "Course Helper"
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 104,
+                        lineNumber: 138,
                         columnNumber: 9
                     }, this),
                     isAuthenticated ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -540,7 +551,7 @@ function Home() {
                         children: "LOGOUT"
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 106,
+                        lineNumber: 140,
                         columnNumber: 11
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         onClick: handleLogin,
@@ -548,13 +559,13 @@ function Home() {
                         children: "LOGIN"
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 113,
+                        lineNumber: 147,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 103,
+                lineNumber: 137,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
@@ -564,12 +575,12 @@ function Home() {
                         onClick: ()=>handleCardClick(course)
                     }, index, false, {
                         fileName: "[project]/app/page.tsx",
-                        lineNumber: 124,
+                        lineNumber: 158,
                         columnNumber: 11
                     }, this))
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 122,
+                lineNumber: 156,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -583,28 +594,30 @@ function Home() {
                     children: "ADD COURSE"
                 }, void 0, false, {
                     fileName: "[project]/app/page.tsx",
-                    lineNumber: 133,
+                    lineNumber: 167,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 132,
+                lineNumber: 166,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$Modal$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                 isOpen: isModalOpen,
                 onClose: ()=>setIsModalOpen(false),
                 onSubmit: selectedCourse ? handleUpdateCourse : handleAddCourse,
-                course: selectedCourse
+                course: selectedCourse,
+                onDelete: handleDeleteCourse,
+                refreshCourses: fetchCourses
             }, void 0, false, {
                 fileName: "[project]/app/page.tsx",
-                lineNumber: 144,
+                lineNumber: 178,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/page.tsx",
-        lineNumber: 102,
+        lineNumber: 136,
         columnNumber: 5
     }, this);
 }

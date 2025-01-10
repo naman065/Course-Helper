@@ -229,7 +229,7 @@ function Register() {
         columnNumber: 5
     }, this);
 }
-_s(Register, "3Hzb6GrDux/Q+qAHbuQmFkGPl1k=", false, function() {
+_s(Register, "WP2tRleaw3/61c2f/R550VbzW0w=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
     ];
