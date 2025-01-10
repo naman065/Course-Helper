@@ -10,9 +10,9 @@ export default function CourseCard({ course, onClick }) {
         className="w-full h-40 object-cover"
       />
       <div className="p-4">
-        <h2 className="text-lg font-bold">{course.title}</h2>
+        <h2 className="text-lg font-bold">{course.name}</h2>
         <p className="text-sm text-gray-600">Code: {course.code}</p>
-        <p className="text-sm text-gray-600">Credits: {course.credits}</p>
+        <p className="text-sm text-gray-600">Credits: {course.credit}</p>
         <p className="mt-2 text-gray-700">{course.description}</p>
       </div>
     </div>
